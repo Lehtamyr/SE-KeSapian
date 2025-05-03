@@ -1,16 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import Message from './Message.tsx'
-import RegisterPage from './Registerpage.tsx'
+// filepath: d:\Semester 4\SE\Testing1\src\main.tsx
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
+import './index.css';
+import RegisterPage from './Registerpage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-
-    
-    <RegisterPage />
-  </StrictMode>,
-
-
-)
+    <BrowserRouter>
+      <RegisterPage />
+    </BrowserRouter>
+  </StrictMode>
+);
