@@ -79,7 +79,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <button type="submit" className="register-button">
+          <button type="submit" className="register-button" >
             Register
           </button>
         </form>
