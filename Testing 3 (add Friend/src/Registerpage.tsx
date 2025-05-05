@@ -93,8 +93,14 @@ export default function RegisterPage() {
             <Apple className="text-black" />
           </button>
           <button className="social-button">
-            <FcGoogle />
+            <img
+              src="/google.png"
+              alt="Google"
+              className="w-6 h-6 mr-2"
+            />
+            {/* Uncomment the line below to use the Google icon from react-icons */}
           </button>
+
         </div>
       </div>
     </div>
