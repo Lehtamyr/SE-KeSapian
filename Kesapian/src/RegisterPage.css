@@ -101,8 +101,8 @@ label {
   background: transparent;
   color: #207f00;
   font-size: 1rem;
-  padding-left: 0.25rem; /* <<< Tambahkan ini */
-  padding-right: 2rem; /* Untuk jaga jarak dengan ikon mata */
+  padding-left: 0.25rem; 
+  padding-right: 2rem; 
 }
 
 .register-input::placeholder {
@@ -163,7 +163,7 @@ label {
 .social-button {
   width: 3.5rem;
   height: 3.5rem;
-  background-color: #49bf82; /* Hijau muda */
+  background-color: #49bf82; 
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -176,7 +176,7 @@ label {
 
 .social-button:hover,
 .social-button:active {
-  background-color: #064e3b; /* Biru saat hover */
+  background-color: #064e3b; 
 }
 
 .social-button svg {

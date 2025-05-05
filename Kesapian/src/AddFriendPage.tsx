@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "./components/ui/button";
 import { Card, CardContent } from "./components/ui/card";
-import "./AddFriendPage.css"; // Import custom styles
+import "./AddFriendPage.css";
 export const AddFriendPage = (): JSX.Element => {
-  // Data for friend recommendations
+  
   const friendRecommendations = [
     {
       id: 1,

@@ -1,6 +1,3 @@
-/* Chatpage.css */
-
-/* Override font jika diperlukan */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
 body {
@@ -18,7 +15,7 @@ body {
 .chat-header {
   height: 170px;
   width: 100%;
-  background: linear-gradient(to bottom, #4ade80, #6ee7b7); /* green-400 to green-300 */
+  background: linear-gradient(to bottom, #4ade80, #6ee7b7); 
   position: absolute;
   top: 0;
   left: 0;
@@ -64,7 +61,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #6b7280; /* text-gray-500 */
+  color: #6b7280; 
 }
 
 .chat-bottom-nav {
@@ -85,55 +82,55 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 12px; /* Ukuran font */
+    font-size: 12px; 
     background: none;
-    border: none; /* Pastikan border dihapus */
-    outline: none; /* Hapus outline default */
+    border: none; 
+    outline: none;
     cursor: pointer;
     position: relative;
-    padding: 8px 12px; /* Ruang di dalam tombol */
-    transition: all 0.3s ease; /* Animasi untuk hover */
-    box-sizing: border-box; /* Pastikan ukuran elemen tidak berubah */
-    width: 80px; /* Tambahkan lebar tetap untuk tombol */
-    height: 80px; /* Tambahkan tinggi tetap untuk tombol */
+    padding: 8px 12px; 
+    transition: all 0.3s ease; 
+    box-sizing: border-box; 
+    width: 80px; 
+    height: 80px; 
   }
 
   .chat-bottom-nav button.active {
-    background-color: #22c55e; /* Hijau untuk tombol aktif */
-    color: white; /* Warna teks putih */
-    border-radius: 10px; /* Membuat tombol lebih bulat */
-    border: none; /* Pastikan tidak ada border */
-    box-sizing: border-box; /* Pastikan ukuran tetap */
+    background-color: #22c55e; 
+    color: white; 
+    border-radius: 10px; 
+    border: none; 
+    box-sizing: border-box; 
   }
   
   .chat-bottom-nav button.active .material-icons {
-    font-size: 24px; /* Ukuran ikon lebih besar */
+    font-size: 24px; 
   }
   
   .chat-bottom-nav button.inactive {
-    color: #9ca3af; /* Warna abu-abu untuk tombol tidak aktif */
-    border: none; /* Pastikan tidak ada border */
-    box-sizing: border-box; /* Pastikan ukuran tetap */
+    color: #9ca3af; 
+    border: none; 
+    box-sizing: border-box; 
   }
   
   .chat-bottom-nav button.inactive .material-icons {
-    font-size: 24px; /* Ukuran ikon tetap */
+    font-size: 24px; 
   }
 
   .chat-bottom-nav button img {
-    width: 24px; /* Ukuran gambar seragam */
+    width: 24px; 
     height: 24px;
-    margin-bottom: 4px; /* Jarak antara gambar dan teks */
+    margin-bottom: 4px; 
   }
 
   .chat-bottom-nav button span {
-    font-family: 'Poppins', sans-serif; /* Font sesuai */
-    font-size: 12px; /* Ukuran font teks */
-    color: inherit; /* Warna mengikuti tombol */
+    font-family: 'Poppins', sans-serif; 
+    font-size: 12px; 
+    color: inherit; 
   }
   
   .chat-bottom-nav button:hover {
-    border: 1px solid #d1d5db; /* Border tipis saat hover */
-    border-radius: 10px; /* Membuat border bulat */
-    box-sizing: border-box; /* Pastikan hover tidak mengubah ukuran */
+    border: 1px solid #d1d5db; 
+    border-radius: 10px; 
+    box-sizing: border-box; 
   }
