@@ -1,9 +1,10 @@
 import React from "react";
-import { Button } from "./components/ui/button";
-import { Card, CardContent } from "./components/ui/card";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import MapBox from "../Add_Friend/MapBox"; 
 import "./AddFriendPage.css";
+
 export const AddFriendPage = (): JSX.Element => {
-  
   const friendRecommendations = [
     {
       id: 1,
@@ -39,7 +40,8 @@ export const AddFriendPage = (): JSX.Element => {
     <div className="bg-white flex flex-row justify-center w-full">
       <div className="bg-white w-[430px] h-[932px] relative">
         {/* Navigation bar in middle */}
-            <div className="absolute w-[430px] h-[100px] bottom-0 bg-[#ececec] shadow-[0px_4px_4px_#00000040]">          <img
+        <div className="absolute w-[430px] h-[100px] bottom-0 bg-[#ececec] shadow-[0px_4px_4px_#00000040]">
+          <img
             className="w-[393px] h-[100px] mx-auto"
             alt="Navbar"
             src="/navbar.svg"
@@ -64,8 +66,10 @@ export const AddFriendPage = (): JSX.Element => {
             Recomendations
           </h2>
 
-          {/* Recommendations placeholder */}
-          <div className="w-[390px] h-[219px] mt-5 bg-[#d9d9d9]" />
+          {/* Map section replaces grey box */}
+          <div className="w-[390px] h-[219px] mt-5 rounded-lg overflow-hidden">
+            <MapBox />
+          </div>
 
           {/* Friends list */}
           <div className="mt-6 space-y-6">

@@ -26,6 +26,7 @@ export default function RegisterPage() {
             <div className="register-input-container">
               <input
                 type="email"
+                id="email"
                 placeholder="Enter your email address"
                 className="register-input"
               />
@@ -37,6 +38,7 @@ export default function RegisterPage() {
             <div className="register-input-container">
               <input
                 type="text"
+                id="username"
                 placeholder="Enter your user name"
                 className="register-input"
               />
@@ -48,6 +50,7 @@ export default function RegisterPage() {
             <div className="register-input-container">
               <input
                 type={showPassword ? "text" : "password"}
+                id="password"
                 placeholder="Enter your password"
                 className="register-input"
               />
@@ -66,6 +69,7 @@ export default function RegisterPage() {
             <div className="register-input-container">
               <input
                 type={showConfirmPassword ? "text" : "password"}
+                id="confirm-password"
                 placeholder="Confirm your password"
                 className="register-input"
               />
@@ -94,9 +98,9 @@ export default function RegisterPage() {
           </button>
           <button className="social-button">
             <img
-              src="/google.png"
+              src="src/assets/google.png"
               alt="Google"
-              className="w-6 h-6 mr-2"
+              className="google-icon"
             />
             {/* Uncomment the line below to use the Google icon from react-icons */}
           </button>

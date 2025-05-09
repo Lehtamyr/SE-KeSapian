@@ -2,15 +2,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
-import RegisterPage from './Registerpage';  
-import Chatpage from './Chatpage';
-import ProfilePage from './Profilepage';
-import { AddFriendPage } from './AddFriendPage';
+import RegisterPage from './Register_Page/Registerpage';
+import ProfilePage from './Profile_Page/Profilepage';
+import { AddFriendPage } from './Add_Friend/AddFriendPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <ProfilePage />
+      <AddFriendPage />
     </BrowserRouter>
   </StrictMode>
 );

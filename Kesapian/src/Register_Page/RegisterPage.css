@@ -11,6 +11,11 @@ body {
   background-color: #a7f3d0;
 }
 
+.google-icon {
+  width: 36px; 
+  height: 36px;
+}
+
 .register-card {
   width: 100%;
   max-width: 28rem;
@@ -101,7 +106,7 @@ label {
   background: transparent;
   color: #207f00;
   font-size: 1rem;
-  padding-left: 0.25rem; 
+  /* padding-left: 0.25rem;  */
   padding-right: 2rem; 
 }
 
