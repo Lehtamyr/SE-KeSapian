@@ -22,3 +22,5 @@ function formValidation(e) {
     window.location.href = "home.html";
   }
 }
+
+export default formValidation;

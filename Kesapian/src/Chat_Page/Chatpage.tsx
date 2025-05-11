@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchIcon, UserPlusIcon } from "lucide-react";
 import { Avatar, AvatarImage } from "../components/ui/avatar";
-import { ScrollArea } from "../components/ui/scroll-area";
+import { ScrollArea } from "../../components/ui/scroll-area";
 import './ChatPage.css';
 
 const Chatpage = (): React.ReactElement => {

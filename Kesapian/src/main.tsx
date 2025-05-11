@@ -5,11 +5,12 @@ import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
 import RegisterPage from './Register_Page/Registerpage';
 import ProfilePage from './Profile_Page/Profilepage';
 import { AddFriendPage } from './Add_Friend/AddFriendPage';
+import LoginPage from './LoginPage/LoginPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <AddFriendPage />
+    <LoginPage/>
     </BrowserRouter>
   </StrictMode>
 );

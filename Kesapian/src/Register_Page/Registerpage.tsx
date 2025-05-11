@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { ArrowLeft, Eye, EyeOff, Facebook, Apple } from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import "./RegisterPage.css"; // Import custom styles
-
+//import formValidation from "./Register.js"; // Import form validation function
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -20,7 +19,8 @@ export default function RegisterPage() {
           If you already have an account <Link to="/login">Login Here</Link>
         </p>
 
-        <form className="register-form">
+        {/* Attach formValidation to onSubmit */}
+          <form className="register-form">
           <div>
             <label>Email</label>
             <div className="register-input-container">
@@ -83,7 +83,14 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <button type="submit" className="register-button" >
+          <div>
+            <label>
+              <input type="checkbox" id="agree-checkbox" /> I agree to the terms
+              and conditions
+            </label>
+          </div>
+
+          <button type="submit" className="register-button">
             Register
           </button>
         </form>
@@ -102,9 +109,7 @@ export default function RegisterPage() {
               alt="Google"
               className="google-icon"
             />
-            {/* Uncomment the line below to use the Google icon from react-icons */}
           </button>
-
         </div>
       </div>
     </div>
