@@ -63,12 +63,34 @@ export default function RegisterPage() {
     return Object.values(newErrors).every((error) => error === "");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log("Form submitted successfully:", formData);
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (validateForm()) {
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("User registered successfully!");
+      } else {
+        alert("Registration failed: " + data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
-  };
+  }
+};
+
 
   return (
     <div className="register-container">
