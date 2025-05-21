@@ -1,16 +1,18 @@
-// filepath: d:\Semester 4\SE\Testing1\src\main.tsx
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
-import RegisterPage from './Register_Page/Registerpage';
-import ProfilePage from './Profile_Page/Profilepage';
-import { AddFriendPage } from './Add_Friend/AddFriendPage';
-import LoginPage from './LoginPage/LoginPage';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
+import RegisterPage from "./Register_Page/Registerpage";
+import ProfilePage from "./Profile_Page/Profilepage";
+import { AddFriendPage } from "./Add_Friend/AddFriendPage";
+import LoginPage from "./LoginPage/LoginPage";
+import Chatpage from "./Chat_Page/Chatpage.tsx";
+import ChoosePref from "./Choose_Pref/ChoosePref.tsx";
+import React from "react";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-    <LoginPage/>
+      <ChoosePref />
     </BrowserRouter>
   </StrictMode>
 );
