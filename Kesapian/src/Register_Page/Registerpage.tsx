@@ -21,6 +21,89 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+    setErrors({ ...errors, [id]: "" });
+  };
+
+  const validateForm = () => {
+    const newErrors: typeof errors = {
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
+    };
+
+    if (!formData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format.";
+    }
+
+    if (!formData.username) {
+      newErrors.username = "Username is required.";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required.";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Confirm Password is required.";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      try {
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert("User registered successfully!");
+        } else {
+          alert("Registration failed: " + data.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +151,7 @@ export default function RegisterPage() {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch("http://localhost:3000/register", { 
+        const response = await fetch("http://localhost:3000/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -88,8 +171,10 @@ export default function RegisterPage() {
           alert("Registration failed: " + (data.message || "Unknown error"));
         }
       } catch (error) {
-        console.error("Fetch Error:", error); 
-        alert("An error occurred during registration. Please try again. (Check backend console for details)");
+        console.error("Fetch Error:", error);
+        alert(
+          "An error occurred during registration. Please try again. (Check backend console for details)"
+        );
       }
     }
   };

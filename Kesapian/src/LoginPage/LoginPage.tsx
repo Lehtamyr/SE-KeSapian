@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ArrowLeft, Eye, EyeOff, Facebook, Apple } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom"; 
+
+import { Link, useNavigate } from "react-router-dom";
+
 import "./LoginPage.css";
 
 export default function LoginPage() {
@@ -14,7 +16,7 @@ export default function LoginPage() {
     password: "",
   });
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -33,7 +35,7 @@ export default function LoginPage() {
 
     if (!formData.password) {
       newErrors.password = "Password is required.";
-    }else if (formData.password.length < 6) {
+    } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters.";
     }
 
@@ -41,11 +43,12 @@ export default function LoginPage() {
     return Object.values(newErrors).every((err) => err === "");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => { 
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch("http://localhost:3000/login", { // <--- Endpoint baru untuk login
+        const response = await fetch("http://localhost:3000/login", {
+          // <--- Endpoint baru untuk login
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -58,15 +61,17 @@ export default function LoginPage() {
 
         const data = await response.json(); // mengambil respons JSON
 
-        if (response.ok) { 
+        if (response.ok) {
           alert("Login successful!");
-          navigate("/preferences"); 
+          navigate("/preferences");
         } else {
           alert("Login failed: " + (data.message || "Unknown error occurred."));
         }
       } catch (error) {
         console.error("Error during login:", error);
-        alert("An error occurred during login. Please try again. (Check backend console for details)");
+        alert(
+          "An error occurred during login. Please try again. (Check backend console for details)"
+        );
       }
     }
   };
@@ -80,7 +85,8 @@ export default function LoginPage() {
 
         <h1 className="login-header">Login</h1>
         <p className="login-subtext">
-          If you don't have an account <Link to="/register">Register Here</Link> {/* Pastikan '/register' */}
+          If you don't have an account <Link to="/register">Register Here</Link>{" "}
+          {/* Pastikan '/register' */}
         </p>
 
         <form className="login-form" onSubmit={handleSubmit}>
