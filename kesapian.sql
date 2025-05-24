@@ -1,7 +1,3 @@
-<<<<<<< HEAD
--- Updated on May 14
-=======
->>>>>>> 7d0c416d33fa70f1f185534e554ce31233c62d5c
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/

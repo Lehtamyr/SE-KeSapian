@@ -1,99 +1,231 @@
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  .all-\[unset\] {
-    all: unset;
-  }
+.add-friend-page-container {
+  width: 430px;
+  height: 932px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
 }
 
-:root {
-  --neutralneutral-300: rgba(154, 155, 177, 1);
-  --neutralneutral-500: rgba(104, 106, 138, 1);
-  --neutralneutral-900: rgba(44, 45, 58, 1);
-  --white: rgba(255, 255, 255, 1);
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-
-    --card: transparent;
-    --card-foreground: 222.2 47.4% 11.2%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 215 20.2% 65.1%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-
-    --card: transparent;
-    --card-foreground: 213 31% 91%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 216 34% 17%;
-
-    --radius: 0.5rem;
-  }
+.add-friend-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  font-family: sans-serif;
+  background-color: #ffffff;
 }
 
-@layer base {
-  * {
-    border: var(--border);
-  }
+.add-friend-content-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  flex-grow: 1;
+}
 
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
+.add-friend-navbar {
+  width: 100%;
+}
+
+.add-friend-navbar-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.add-friend-header {
+  position: relative;
+  width: 100%;
+}
+
+.add-friend-header-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.add-friend-title {
+  /* position: absolute; */
+  text-align: center;
+  
+  bottom: 10px;
+  left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
+.add-friend-main-section {
+  padding: 16px;
+}
+
+.add-friend-section-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.add-friend-map-section {
+  width: 100%;
+  height: 150px;
+  background-color: #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.add-friend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.add-friend-card {
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  background: transparent;
+}
+
+.add-friend-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.add-friend-card-info {
+  display: flex;
+  align-items: center;
+}
+
+.add-friend-avatar-bg {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.add-friend-avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.add-friend-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-friend-user-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.add-friend-user-distance {
+  font-size: 12px;
+  color: #666;
+}
+
+.add-friend-view-btn {
+  border-radius: 20px;
+  height: 32px;
+  padding: 0 16px;
+}
+
+.add-friend-view-btn-text {
+  font-size: 14px;
+}
+
+.navbar-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #eee;
+  background-color: white;
+  padding: 8px 0;
+}
+
+.chat-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 0;
+  z-index: 0;
+  box-sizing: border-box;
+}
+
+.chat-bottom-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  width: 80px;
+  height: 80px;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.chat-bottom-nav button.active {
+  background-color: #22c55e;
+  color: white;
+}
+
+.chat-bottom-nav button.inactive {
+  color: #9ca3af;
+}
+
+.chat-bottom-nav button img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+.chat-bottom-nav button span {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: black;
+}
+
+.chat-bottom-nav button.active span {
+  background-color: #22c55e;
+  color: white;
+}
+
+.chat-bottom-nav button:hover {
+  border: 1px solid #d1d5db;
 }
