@@ -1,8 +1,9 @@
-import React from "react";
+//import React from "react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
-import MapBox from "../Add_Friend/MapBox"; 
+import MapBox from "../Add_Friend/MapBox";
 import "./AddFriendPage.css";
+//import SearchInput from "../SearchBar";
 
 export const AddFriendPage = (): JSX.Element => {
   const friendRecommendations = [
@@ -37,72 +38,79 @@ export const AddFriendPage = (): JSX.Element => {
   ];
 
   return (
-    <div className="bg-white flex flex-row justify-center w-full">
-      <div className="bg-white w-[430px] h-[932px] relative">
-        {/* Navigation bar in middle */}
-        <div className="absolute w-[430px] h-[100px] bottom-0 bg-[#ececec] shadow-[0px_4px_4px_#00000040]">
-          <img
-            className="w-[393px] h-[100px] mx-auto"
-            alt="Navbar"
-            src="/navbar.svg"
-          />
-        </div>
+    <div className="add-friend-page-container">
+      <div className="add-friend-content-wrapper">
 
         {/* Header */}
-        <div className="w-full h-[119px]">
+        <div className="add-friend-header">
           <img
-            className="w-full h-[104px]"
-            alt="Rectangle"
+            className="add-friend-header-bg"
+            alt="Header Background"
             src="/rectangle-107.svg"
           />
-          <div className="w-[393px] mx-auto mt-[95px] font-medium text-[#292929] text-base text-center font-['Poppins',Helvetica]">
+          <div className="add-friend-title">
             Add Friends
           </div>
+
+          
+          <div className="add-friend-search-bar">
+
+            <form className="w-[388px] min-h-[56px] bg-gray-100 rounded p-4">
+              {/* <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label> */}
+              <div className="relative">
+                <img src="src/assets/SearchIcon.png" alt="search" />
+
+                <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
+                <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+              </div>
+            </form>
+          </div>
+
         </div>
 
         {/* Recommendations section */}
-        <div className="mt-16 mx-6">
-          <h2 className="font-medium text-black text-base font-['Poppins',Helvetica]">
-            Recomendations
+        <div className="add-friend-main-section">
+          <h2 className="add-friend-section-title">
+            Recommendations
           </h2>
 
-          {/* Map section replaces grey box */}
-          <div className="w-[390px] h-[219px] mt-5 rounded-lg overflow-hidden">
+          {/* Map section */}
+          <div className="add-friend-map-section">
             <MapBox />
           </div>
 
           {/* Friends list */}
-          <div className="mt-6 space-y-6">
+          <div className="add-friend-list">
             {friendRecommendations.map((friend) => (
-              <Card key={friend.id} className="border-none shadow-none">
-                <CardContent className="p-0 flex items-start justify-between">
-                  <div className="flex items-start gap-4">
+              <Card key={friend.id} className="add-friend-card">
+                <CardContent className="add-friend-card-content">
+                  <div className="add-friend-card-info">
                     {friend.isAvatarBg ? (
                       <div
-                        className="w-[42px] h-[42px] rounded-[100px] bg-cover bg-center"
+                        className="add-friend-avatar-bg"
                         style={{ backgroundImage: `url(${friend.avatar})` }}
                       />
                     ) : (
                       <img
-                        className="w-[42px] h-[42px] object-cover"
+                        className="add-friend-avatar-img"
                         alt={`${friend.name}'s avatar`}
                         src={friend.avatar}
                       />
                     )}
-                    <div className="flex flex-col items-start justify-center gap-2">
-                      <div className="font-bold text-neutralneutral-900 text-base font-['Roboto',Helvetica]">
+                    <div className="add-friend-user-info">
+                      <div className="add-friend-user-name">
                         {friend.name}
                       </div>
-                      <div className="font-bold text-neutralneutral-300 text-xs text-center font-['Roboto',Helvetica]">
+                      <div className="add-friend-user-distance">
                         {friend.distance}
                       </div>
                     </div>
                   </div>
                   <Button
                     variant="outline"
-                    className="h-[26px] w-[83px] rounded-[15px] bg-[#d9d9d9] border-none hover:bg-[#c9c9c9]"
+                    className="add-friend-view-btn"
                   >
-                    <span className="font-medium text-black text-sm font-['Poppins',Helvetica]">
+                    <span className="add-friend-view-btn-text">
                       View
                     </span>
                   </Button>
@@ -110,6 +118,25 @@ export const AddFriendPage = (): JSX.Element => {
               </Card>
             ))}
           </div>
+
+          <nav className="chat-bottom-nav">
+            <button className="nav-button">
+                <img src="src/assets/bubblechat-before.png" alt="Chats" />
+                <span>Chats</span>
+            </button>
+            <button className="nav-button">
+                <img src="src/assets/groupBefore.png" alt="Groups" />
+                <span>Groups</span>
+            </button>
+            <button className="nav-button active">
+                <img src="src/assets/peopleAfter.png" alt="Profile" />
+                <span>Profile</span>
+            </button>
+            <button className="nav-button">
+                <img src="src/assets/moreBefore.png" alt="More" />
+                <span>More</span>
+            </button>
+          </nav>
         </div>
       </div>
     </div>

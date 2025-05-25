@@ -1,11 +1,98 @@
 import { useState } from "react";
 import { ArrowLeft, Eye, EyeOff, Facebook, Apple } from "lucide-react";
-import { Link } from "react-router-dom";
-import "./RegisterPage.css"; // Import custom styles
-//import formValidation from "./Register.js"; // Import form validation function
+import { Link, useNavigate } from "react-router-dom";
+import "./RegisterPage.css";
+
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+    setErrors({ ...errors, [id]: "" });
+  };
+
+  const validateForm = () => {
+    const newErrors: typeof errors = {
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
+    };
+
+    if (!formData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format.";
+    }
+
+    if (!formData.username) {
+      newErrors.username = "Username is required.";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required.";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Confirm Password is required.";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      try {
+        const response = await fetch("http://localhost:3000/register", { 
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert("User registered successfully!");
+          navigate("/login");
+        } else {
+          alert("Registration failed: " + (data.message || "Unknown error"));
+        }
+      } catch (error) {
+        console.error("Fetch Error:", error); 
+        alert("An error occurred during registration. Please try again. (Check backend console for details)");
+      }
+    }
+  };
 
   return (
     <div className="register-container">
@@ -19,8 +106,7 @@ export default function RegisterPage() {
           If you already have an account <Link to="/login">Login Here</Link>
         </p>
 
-        {/* Attach formValidation to onSubmit */}
-          <form className="register-form">
+        <form className="register-form" onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
             <div className="register-input-container">
@@ -29,8 +115,11 @@ export default function RegisterPage() {
                 id="email"
                 placeholder="Enter your email address"
                 className="register-input"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
+            {errors.email && <p className="error-text">{errors.email}</p>}
           </div>
 
           <div>
@@ -41,8 +130,11 @@ export default function RegisterPage() {
                 id="username"
                 placeholder="Enter your user name"
                 className="register-input"
+                value={formData.username}
+                onChange={handleChange}
               />
             </div>
+            {errors.username && <p className="error-text">{errors.username}</p>}
           </div>
 
           <div>
@@ -53,6 +145,8 @@ export default function RegisterPage() {
                 id="password"
                 placeholder="Enter your password"
                 className="register-input"
+                value={formData.password}
+                onChange={handleChange}
               />
               <button
                 type="button"
@@ -62,6 +156,7 @@ export default function RegisterPage() {
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
+            {errors.password && <p className="error-text">{errors.password}</p>}
           </div>
 
           <div>
@@ -69,9 +164,11 @@ export default function RegisterPage() {
             <div className="register-input-container">
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                id="confirm-password"
+                id="confirmPassword"
                 placeholder="Confirm your password"
                 className="register-input"
+                value={formData.confirmPassword}
+                onChange={handleChange}
               />
               <button
                 type="button"
@@ -81,13 +178,9 @@ export default function RegisterPage() {
                 {showConfirmPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
-          </div>
-
-          <div>
-            <label>
-              <input type="checkbox" id="agree-checkbox" /> I agree to the terms
-              and conditions
-            </label>
+            {errors.confirmPassword && (
+              <p className="error-text">{errors.confirmPassword}</p>
+            )}
           </div>
 
           <button type="submit" className="register-button">
