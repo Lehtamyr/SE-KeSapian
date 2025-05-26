@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, Eye, EyeOff, Facebook, Apple } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; 
 import "./LoginPage.css";
 
 export default function LoginPage() {
@@ -13,6 +13,8 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate(); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -31,7 +33,7 @@ export default function LoginPage() {
 
     if (!formData.password) {
       newErrors.password = "Password is required.";
-    } else if (formData.password.length < 6) {
+    }else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters.";
     }
 
@@ -39,10 +41,38 @@ export default function LoginPage() {
     return Object.values(newErrors).every((err) => err === "");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => { 
     e.preventDefault();
     if (validateForm()) {
-      alert("Login success (dummy)!");
+      try {
+        const response = await fetch("http://localhost:3000/login", { 
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+          alert("Login successful!");
+
+            localStorage.setItem('userId', data.user.id.toString());
+            localStorage.setItem('username', data.user.username);
+            localStorage.setItem('userPreferences', JSON.stringify(data.user.preferences)); 
+
+            // mengecek apakah pengguna sudah memiliki preferensi
+            if (data.user.preferences && data.user.preferences.length > 0) {
+                navigate('/chat'); 
+            } else {
+                navigate('/preferences'); 
+            }
+      } catch (error) {
+        console.error("Error during login:", error);
+        alert("An error occurred during login. Please try again.");
+      }
     }
   };
 
@@ -55,7 +85,7 @@ export default function LoginPage() {
 
         <h1 className="login-header">Login</h1>
         <p className="login-subtext">
-          If you don't have an account <Link to="/Register">Register Here</Link>
+          If you don't have an account <Link to="/register">Register Here</Link> {/* Pastikan '/register' */}
         </p>
 
         <form className="login-form" onSubmit={handleSubmit}>
@@ -119,7 +149,7 @@ export default function LoginPage() {
           </button>
           <button className="social-button">
             <img
-              src="src/assets/google.png"
+              src="src/assets/icons/google.png"
               alt="Google"
               className="google-icon"
             />

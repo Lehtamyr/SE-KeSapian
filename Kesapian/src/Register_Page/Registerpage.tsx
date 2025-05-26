@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ArrowLeft, Eye, EyeOff, Facebook, Apple } from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
-import "./RegisterPage.css"; 
+import { Link, useNavigate } from "react-router-dom";
+import "./RegisterPage.css";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -22,10 +21,12 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
-    setErrors({ ...errors, [id]: "" }); 
+    setErrors({ ...errors, [id]: "" });
   };
 
   const validateForm = () => {
@@ -63,10 +64,33 @@ export default function RegisterPage() {
     return Object.values(newErrors).every((error) => error === "");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted successfully:", formData);
+      try {
+        const response = await fetch("http://localhost:3000/register", { 
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert("User registered successfully!");
+          navigate("/login");
+        } else {
+          alert("Registration failed: " + (data.message || "Unknown error"));
+        }
+      } catch (error) {
+        console.error("Fetch Error:", error); 
+        alert("An error occurred during registration. Please try again. (Check backend console for details)");
+      }
     }
   };
 

@@ -1,117 +1,237 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import MapBox from "../Add_Friend/MapBox"; 
-import "./AddFriendPage.css";
+import { useNavigate } from "react-router-dom";
+import './AddFriendPage.css';
+import SearchIcon from "../assets/icons/Searchicon.png";
+import ChatBubbleIcon from "../assets/icons/chatBubble.png";
+import GroupBeforeIcon from "../assets/icons/groupBefore.png";
+import PeopleAfterIcon from "../assets/icons/peopleafter.png"; 
+import MoreBeforeIcon from "../assets/icons/moreBefore.png";
+import HeaderBg from '/rectangle-107.svg'; 
+
 
 export const AddFriendPage = (): JSX.Element => {
-  const friendRecommendations = [
-    {
-      id: 1,
-      name: "David Wayne",
-      distance: "800m From Your Position",
-      avatar: "/avatar.png",
-      isAvatarBg: true,
-    },
-    {
-      id: 2,
-      name: "Edward Davidson",
-      distance: "1.2km From Your Position",
-      avatar: "/rectangle.png",
-      isAvatarBg: false,
-    },
-    {
-      id: 3,
-      name: "Angela Kelly",
-      distance: "1.5km From Your Position",
-      avatar: "/rectangle-1.png",
-      isAvatarBg: false,
-    },
-    {
-      id: 4,
-      name: "Dennis Borer",
-      distance: "2km From Your Position",
-      avatar: "/rectangle-2.png",
-      isAvatarBg: false,
-    },
-  ];
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [message, setMessage] = useState('');
+    const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-  return (
-    <div className="bg-white flex flex-row justify-center w-full">
-      <div className="bg-white w-[430px] h-[932px] relative">
-        {/* Navigation bar in middle */}
-        <div className="absolute w-[430px] h-[100px] bottom-0 bg-[#ececec] shadow-[0px_4px_4px_#00000040]">
-          <img
-            className="w-[393px] h-[100px] mx-auto"
-            alt="Navbar"
-            src="/navbar.svg"
-          />
-        </div>
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            setCurrentUserId(userId);
+        } else {
+            alert('You must be logged in to add friends.');
+            navigate('/login');
+        }
+    }, [navigate]);
 
-        {/* Header */}
-        <div className="w-full h-[119px]">
-          <img
-            className="w-full h-[104px]"
-            alt="Rectangle"
-            src="/rectangle-107.svg"
-          />
-          <div className="w-[393px] mx-auto mt-[95px] font-medium text-[#292929] text-base text-center font-['Poppins',Helvetica]">
-            Add Friends
-          </div>
-        </div>
+    const handleBackClick = () => {
+        navigate('/chat');
+    };
 
-        {/* Recommendations section */}
-        <div className="mt-16 mx-6">
-          <h2 className="font-medium text-black text-base font-['Poppins',Helvetica]">
-            Recomendations
-          </h2>
+    const handleSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setMessage(''); 
+        setSearchResults([]); 
 
-          {/* Map section replaces grey box */}
-          <div className="w-[390px] h-[219px] mt-5 rounded-lg overflow-hidden">
-            <MapBox />
-          </div>
+        if (!searchQuery.trim()) {
+            setMessage('Please enter a username or email to search.');
+            return;
+        }
 
-          {/* Friends list */}
-          <div className="mt-6 space-y-6">
-            {friendRecommendations.map((friend) => (
-              <Card key={friend.id} className="border-none shadow-none">
-                <CardContent className="p-0 flex items-start justify-between">
-                  <div className="flex items-start gap-4">
-                    {friend.isAvatarBg ? (
-                      <div
-                        className="w-[42px] h-[42px] rounded-[100px] bg-cover bg-center"
-                        style={{ backgroundImage: `url(${friend.avatar})` }}
-                      />
-                    ) : (
-                      <img
-                        className="w-[42px] h-[42px] object-cover"
-                        alt={`${friend.name}'s avatar`}
-                        src={friend.avatar}
-                      />
-                    )}
-                    <div className="flex flex-col items-start justify-center gap-2">
-                      <div className="font-bold text-neutralneutral-900 text-base font-['Roboto',Helvetica]">
-                        {friend.name}
-                      </div>
-                      <div className="font-bold text-neutralneutral-300 text-xs text-center font-['Roboto',Helvetica]">
-                        {friend.distance}
-                      </div>
+        try {
+            const response = await fetch(`http://localhost:3000/search-user?query=${encodeURIComponent(searchQuery)}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to search for users');
+            }
+            const data = await response.json();
+            // Filter out the current user from search results
+            const filteredResults = data.users.filter((user: any) => user.id !== parseInt(currentUserId || '0'));
+            setSearchResults(filteredResults);
+
+            if (filteredResults.length === 0) {
+                setMessage('No users found matching your search.'); // Updated message
+            }
+        } catch (error: any) {
+            console.error('Error searching users:', error);
+            setMessage('An error occurred while searching: ' + error.message);
+        }
+    };
+
+    const handleAddFriend = async (targetUser: any) => {
+        if (!currentUserId) {
+            alert('User ID not found. Please re-login.');
+            navigate('/login');
+            return;
+        }
+
+        if (parseInt(currentUserId) === targetUser.id) {
+            alert('You cannot add yourself as a friend.');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/add-friend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    currentUserId: parseInt(currentUserId),
+                    targetUserId: targetUser.id,
+                }),
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to send friend request');
+            }
+
+            alert(data.message);
+            // Remove the added friend from search results/recommendations
+            setSearchResults(prevResults => prevResults.filter(user => user.id !== targetUser.id));
+
+        } catch (error: any) {
+            console.error('Error adding friend:', error);
+            alert('Error adding friend: ' + error.message);
+        }
+    };
+
+    // Static recommendations data
+    const friendRecommendations = [
+        {
+            id: 11,
+            username: "wokwokwok",
+            email: "jokojeki@gmail.com",
+            distance: "800m From Your Position",
+            avatar: "/avatar.png",
+        },
+    ];
+
+    // Filter out the current user from recommendations as well
+    const filteredRecommendations = friendRecommendations.filter(
+        (user: any) => user.id !== parseInt(currentUserId || '0')
+    );
+
+    // menentukan apakah akan menampilkan hasil pencarian atau rekomendasi
+    const usersToDisplay = searchResults.length > 0 ? searchResults : filteredRecommendations;
+
+    // menentukan apakah daftar teman kosong atau hanya ada pesan
+    const isListEmpty = usersToDisplay.length === 0 && !message;
+    const isMessageVisible = message && usersToDisplay.length === 0;
+
+
+    return (
+        <div className="add-friend-page-container">
+            <div className="add-friend-content-wrapper">
+
+                {/* Header */}
+                <div className="add-friend-header" style={{ backgroundImage: `url(${HeaderBg})` }}>
+                    <button className="back-button" onClick={handleBackClick}>&larr;</button>
+                    <div className="add-friend-title">
+                        Add Friends
                     </div>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="h-[26px] w-[83px] rounded-[15px] bg-[#d9d9d9] border-none hover:bg-[#c9c9c9]"
-                  >
-                    <span className="font-medium text-black text-sm font-['Poppins',Helvetica]">
-                      View
-                    </span>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+                    {/* Search Bar */}
+                    <div className="add-friend-search-bar">
+                        <form className="w-[388px] min-h-[56px] bg-gray-100 rounded p-4" onSubmit={handleSearch}>
+                            <img src={SearchIcon} alt="search" className="absolute" />
+                            <input
+                                type="search"
+                                id="default-search"
+                                placeholder="Search by Username or Email..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                required
+                            />
+                            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                {/* Recommendations and Search Results section */}
+                <div className="add-friend-main-section">
+                    <h2 className="add-friend-section-title">
+                        {searchResults.length > 0 || searchQuery.trim() !== '' ? 'Search Results' : 'Recommendations'}
+                    </h2>
+                    {/* Pesan error/info  */}
+                    {message && <p className="message-container">{message}</p>}
+
+                    {/* Map section */}
+                    <div className="add-friend-map-section">
+                        <MapBox />
+                    </div>
+
+                    {/* Friends list */}
+                    <div className={`add-friend-list ${isListEmpty && !message ? 'add-friend-list--empty' : ''}`}>
+                        {/* Jika tidak ada hasil pencarian DAN tidak ada rekomendasi, tampilkan pesan kosong. */}
+                        {/* Pesan "No users found matching your search." sudah ditangani oleh state `message` */}
+                        {usersToDisplay.length === 0 && !message && (
+                            <p className="message-container">No recommendations available.</p>
+                        )}
+                        {/* Render user cards jika ada user untuk ditampilkan */}
+                        {usersToDisplay.length > 0 && usersToDisplay.map((user) => (
+                            <Card key={user.id} className="add-friend-card">
+                                <CardContent className="add-friend-card-content">
+                                    <div className="add-friend-card-info">
+                                        <div className="add-friend-avatar-wrapper">
+                                            <img
+                                                className="add-friend-avatar-img"
+                                                alt={`${user.username || user.name}'s avatar`}
+                                                src={user.avatar || "/default-avatar.png"}
+                                            />
+                                        </div>
+                                        <div className="add-friend-user-info">
+                                            <div className="add-friend-user-name">
+                                                {user.username || user.name}
+                                            </div>
+                                            <div className="add-friend-user-distance">
+                                                {user.distance || user.email}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        variant="outline"
+                                        className="add-friend-view-btn"
+                                        onClick={() => handleAddFriend(user)}
+                                    >
+                                        <span className="add-friend-view-btn-text">
+                                            Add Friend
+                                        </span>
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {/* Bottom Navigation */}
+            <nav className="chat-bottom-nav">
+                <button className="nav-button active" onClick={() => navigate('/chat')}>
+                    <img src={ChatBubbleIcon} alt="Chats" />
+                    <span>Chats</span>
+                </button>
+                <button className="nav-button" onClick={() => alert('Groups page not implemented yet!')}>
+                    <img src={GroupBeforeIcon} alt="Groups" />
+                    <span>Groups</span>
+                </button>
+                <button className="nav-button" onClick={() => alert('Profile page not implemented yet!')}>
+                    <img src={PeopleAfterIcon} alt="Profile" />
+                    <span>Profile</span>
+                </button>
+                <button className="nav-button" onClick={() => alert('More page not implemented yet!')}>
+                    <img src={MoreBeforeIcon} alt="More" />
+                    <span>More</span>
+                </button>
+            </nav>
         </div>
-      </div>
-    </div>
-  );
+    );
 };

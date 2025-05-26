@@ -1,16 +1,24 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
-import RegisterPage from './Register_Page/Registerpage';
-import ProfilePage from './Profile_Page/Profilepage';
-import { AddFriendPage } from './Add_Friend/AddFriendPage';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import LoginPage from './LoginPage/LoginPage';
-import Chatpage from './Chat_Page/Chatpage.tsx';
+import RegisterPage from './Register_Page/Registerpage';
+import PreferencesPage from './Choose_Pref/ChoosePref';
+import Chatpage from './Chat_Page/Chatpage';
+import { AddFriendPage } from './Add_Friend/AddFriendPage'; // Import AddFriendPage
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <ProfilePage />
+      <Routes>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/preferences" element={<PreferencesPage />} />
+        <Route path="/chat" element={<Chatpage />} />
+        <Route path="/add-friend" element={<AddFriendPage />} /> 
+        <Route path="/" element={<Navigate to="/login" replace />} /> 
+      </Routes>
     </BrowserRouter>
   </StrictMode>
 );
