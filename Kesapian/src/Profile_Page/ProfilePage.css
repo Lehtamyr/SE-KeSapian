@@ -3,23 +3,25 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.profile-container {
-  width: 430px;
-  height: 932px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  margin: 0 auto 15px;
   display: flex;
-  flex-direction: column;
-  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #374151;
 }
 
 .profile-page {
@@ -29,9 +31,8 @@ body {
 }
 
 .header {
-  background-color: #69c37e;
-  padding-top: 40px;
-  padding-bottom: 60px;
+  background-color: #4ade80;
+  padding: 60px 20px 30px;
   text-align: center;
   position: relative;
 }
@@ -84,42 +85,48 @@ body {
 }
 
 .header h2 {
-  margin: 10px 0 5px;
-  font-size: 20px;
+  margin: 0 0 5px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
 }
 
 .header p {
   margin: 0;
-  color: #666;
+  font-size: 14px;
+  color: #374151;
 }
 
 .content {
-  flex: 1;
   padding: 20px;
-  overflow-y: auto;
-  padding-bottom: 120px;
+  padding-bottom: 100px;
 }
 
 .section {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .section label {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: black;
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #111827;
+  font-size: 14px;
 }
 
 .section input {
-  width: 95%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box; 
+}
+
+.section input:focus {
+  outline: none;
+  border-color: #4ade80;
 }
 
 .section .icon {
@@ -128,30 +135,63 @@ body {
 
 .preferences {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-.preference {
-  padding: 10px 20px;
-  background-color: #34a853;
-  border-radius: 20px;
-  font-size: 14px;
+.profile-container {
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  background-color: #ffffff;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.edit-preferences-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4ade80;
   color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 16px;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.preference-tag {
+  padding: 8px 16px;
+  background-color: #e5e7eb;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.edit-preferences-button:hover {
+  background-color: #22c55e;
 }
 
 .chat-bottom-nav {
-  height: 100px;
-  width: 100%;
-  border-top: 1px solid #e5e7eb;
-  background-color: #ececec;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  height: 80px;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .chat-bottom-nav button {
@@ -159,40 +199,39 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px 12px;
-  width: 80px;
-  height: 80px;
-  transition: all 0.3s ease;
-  border-radius: 10px;
+  padding: 8px;
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
 .chat-bottom-nav button.active {
   background-color: #22c55e;
-  color: white;
 }
 
 .chat-bottom-nav button.inactive {
   color: #9ca3af;
 }
 
-.chat-bottom-nav button img {
+.bottom-nav button img {
   width: 24px;
   height: 24px;
   margin-bottom: 4px;
+  transition: all 0.2s ease;
 }
 
 .chat-bottom-nav button span {
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
-  color: black;
+  font-weight: 500;
+  color: #4b5563;
 }
 
 .chat-bottom-nav button.active span {
-  background-color: #22c55e;
   color: white;
 }
 
