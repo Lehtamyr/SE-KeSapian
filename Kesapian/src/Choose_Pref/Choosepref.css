@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .container {
   background-color: #7cc784;
   height: 100vh;
@@ -67,3 +68,69 @@
 .html{
   background: #4caf50;
 }
+=======
+.container {
+  background-color: #7cc784;
+  height: 100vh;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.back-button {
+  align-self: flex-start;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 300px;
+}
+
+.tag-button {
+  background-color: #a1dda6;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.tag-button.selected {
+  background-color: #4caf50;
+  color: white;
+}
+
+.next-button {
+  margin-top: 30px;
+  background: none;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+>>>>>>> ad9647da20c3bb7cbbd3363a20d70f7b2a640fe5

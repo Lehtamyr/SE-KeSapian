@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -212,4 +213,220 @@ label {
 .social-button svg {
   width: 1.75rem;
   height: 1.75rem;
+=======
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+}
+
+.google-icon {
+  width: 36px; 
+  height: 36px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 28rem;
+  margin: 2rem auto;
+  background-color: #d1fae5;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: -3rem;
+  left: -3rem;
+  width: 10rem;
+  height: 10rem;
+  background-color: #bbf7d0;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.login-card::after {
+  content: '';
+  position: absolute;
+  bottom: -2rem;
+  right: -2rem;
+  width: 8rem;
+  height: 8rem;
+  background-color: #bbf7d0;
+  border-radius: 50%;
+  z-index: -1;
+  transform: rotate(45deg);
+}
+
+.login-header {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.login-subtext {
+  color: #000000;
+  margin-bottom: 1.5rem;
+}
+
+.login-subtext a {
+  color: #047857;
+  text-decoration: underline;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: 100%;
+}
+
+.login-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1rem;
+}
+
+.login-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  position: relative;
+}
+
+.login-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #207f00;
+  font-size: 1rem;
+  padding-right: 2rem; 
+}
+
+.login-input::placeholder {
+  color: #9ca3af;
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 0;
+  background: none;
+  border: none;
+  color: #064e3b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.altText {
+  color: black;
+  padding-top: 0.5rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.password-toggle-button:hover {
+  color: #047857;
+}
+
+.password-toggle-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #064e3b;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #047857;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.social-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #49bf82; 
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+}
+
+.social-button:hover,
+.social-button:active {
+  background-color: #064e3b; 
+}
+
+.social-button svg {
+  width: 1.75rem;
+  height: 1.75rem;
+>>>>>>> ad9647da20c3bb7cbbd3363a20d70f7b2a640fe5
 }
