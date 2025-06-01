@@ -1,13 +1,13 @@
 .container {
   background-color: #7cc784;
   height: 100vh;
-  padding: 20px;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  width: 430px;
 }
 
 .back-button {
@@ -53,7 +53,7 @@
 }
 
 .next-button {
-  margin-top: 30px;
+  margin-top: 20px;
   background: none;
   border: 2px solid white;
   border-radius: 20px;
@@ -61,4 +61,9 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.html{
+  background: #4caf50;
 }

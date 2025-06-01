@@ -1,10 +1,18 @@
-// models/index.js
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database/db');
+const sequelize = require('../database/db'); 
 
-const User = require('./user')(sequelize, DataTypes);
+const db = {};
 
-module.exports = {
-  sequelize,
-  User,
-};
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+db.User = require('./User')(sequelize, DataTypes);
+db.Friendship = require('./Friendship')(sequelize, DataTypes);
+
+Object.keys(db).forEach(modelName => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
+});
+
+module.exports = db;

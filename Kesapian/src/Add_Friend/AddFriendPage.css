@@ -1,231 +1,219 @@
-.add-friend-page-container {
-  width: 430px;
-  height: 932px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-height: 100vh;
-}
-
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.add-friend-page-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-  font-family: sans-serif;
-  background-color: #ffffff;
-}
-
-.add-friend-content-wrapper {
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  flex-grow: 1;
-}
-
-.add-friend-navbar {
-  width: 100%;
-}
-
-.add-friend-navbar-img {
-  width: 100%;
-  height: auto;
-  display: block;
+.add-friend-container {
+    width: 100%;
+    width: 430px;
+    height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .add-friend-header {
-  position: relative;
-  width: 100%;
+    background: linear-gradient(to bottom, #4ade80, #6ee7b7);
+    padding: 60px 20px 20px;
+    position: relative;
+    flex-shrink: 0;
 }
 
-.add-friend-header-bg {
-  width: 100%;
-  height: auto;
-  display: block;
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #111827;
+    cursor: pointer;
 }
 
 .add-friend-title {
-  /* position: absolute; */
-  text-align: center;
-  
-  bottom: 10px;
-  left: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.add-friend-main-section {
-  padding: 16px;
+.search-container {
+    width: 100%;
+    position: relative;
 }
 
-.add-friend-section-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 12px;
+.search-form {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.add-friend-map-section {
-  width: 100%;
-  height: 150px;
-  background-color: #ccc;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 16px;
+.search-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-.add-friend-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 14px;
 }
 
-.add-friend-card {
-  border: none;
-  box-shadow: none;
-  padding: 0;
-  background: transparent;
+.search-button {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-left: 8px;
+    font-weight: 500;
 }
 
-.add-friend-card-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
+.add-friend-main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    padding-bottom: 100px;
 }
 
-.add-friend-card-info {
-  display: flex;
-  align-items: center;
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #111827;
 }
 
-.add-friend-avatar-bg {
-  width: 40px;
-  height: 40px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 50%;
-  margin-right: 12px;
+.map-container {
+    width: 100%;
+    height: 150px;
+    background-color: #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 
-.add-friend-avatar-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 12px;
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.add-friend-user-info {
-  display: flex;
-  flex-direction: column;
+.user-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.add-friend-user-name {
-  font-weight: 600;
-  font-size: 14px;
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.add-friend-user-distance {
-  font-size: 12px;
-  color: #666;
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
-.add-friend-view-btn {
-  border-radius: 20px;
-  height: 32px;
-  padding: 0 16px;
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.add-friend-view-btn-text {
-  font-size: 14px;
+.user-name {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
 }
 
-.navbar-bottom {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  max-width: 480px;
-  display: flex;
-  justify-content: space-around;
-  border-top: 1px solid #eee;
-  background-color: white;
-  padding: 8px 0;
+.user-distance {
+    font-size: 12px;
+    color: #6b7280;
 }
 
-.chat-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border-top: 1px solid #ccc;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 5px 0;
-  z-index: 0;
-  box-sizing: border-box;
+.add-button {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
-.chat-bottom-nav button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px 12px;
-  width: 80px;
-  height: 80px;
-  transition: all 0.3s ease;
-  border-radius: 10px;
+.message {
+    color: #ef4444;
+    text-align: center;
+    font-size: 14px;
+    margin: 10px 0;
+    padding: 10px;
 }
 
-.chat-bottom-nav button.active {
-  background-color: #22c55e;
-  color: white;
+.empty-message {
+    text-align: center;
+    color: #6b7280;
+    padding: 20px;
 }
 
-.chat-bottom-nav button.inactive {
-  color: #9ca3af;
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    height: 80px;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
 }
 
-.chat-bottom-nav button img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
 }
 
-.chat-bottom-nav button span {
-  font-family: 'Poppins', sans-serif;
-  font-size: 12px;
-  color: black;
+.nav-button.bubble {
+    background-color: #22c55e;
 }
 
-.chat-bottom-nav button.active span {
-  background-color: #22c55e;
-  color: white;
+.nav-button.bubble span{
+    color: white;
 }
 
-.chat-bottom-nav button:hover {
-  border: 1px solid #d1d5db;
+.nav-button img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+}
+
+.nav-button span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #4b5563;
 }
