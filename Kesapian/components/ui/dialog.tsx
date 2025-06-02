@@ -4,7 +4,9 @@ import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+// Update the import path if needed, for example:
+import { cn } from "../../lib/utils"
+// Or create the file at 'Kesapian/lib/utils.ts' and export 'cn' from it.
 
 const Dialog = DialogPrimitive.Root
 
