@@ -1388,6 +1388,216 @@ app.post('/respond-friend-request', async (req, res) => {
     }
 });
 
+// Group Routes
+app.post('/api/groups', async (req, res) => {
+  const { name, description, created_by, is_private, members } = req.body;
+
+  try {
+    const group = await db.Group.create({
+      name,
+      description,
+      created_by,
+      is_private
+    });
+
+    // Add creator as admin
+    await db.GroupMember.create({
+      group_id: group.id,
+      user_id: created_by,
+      role: 'admin'
+    });
+
+    // Add other members
+    if (members && members.length > 0) {
+      const memberPromises = members.map(userId => 
+        db.GroupMember.create({
+          group_id: group.id,
+          user_id: userId,
+          role: 'member'
+        })
+      );
+      await Promise.all(memberPromises);
+    }
+
+    res.status(201).json(group);
+  } catch (error) {
+    console.error('Error creating group:', error);
+    res.status(500).json({ message: 'Failed to create group' });
+  }
+});
+
+app.get('/api/groups/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const groups = await db.GroupMember.findAll({
+      where: { user_id: userId },
+      include: [
+        {
+          model: db.Group,
+          as: 'group',
+          include: [
+            {
+              model: db.GroupMessage,
+              as: 'messages',
+              order: [['created_at', 'DESC']],
+              limit: 1
+            },
+            {
+              model: db.GroupMember,
+              as: 'members',
+              include: [
+                {
+                  model: db.User,
+                  as: 'user',
+                  attributes: ['id', 'username']
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    });
+
+    res.json(groups.map(gm => gm.group));
+  } catch (error) {
+    console.error('Error fetching groups:', error);
+    res.status(500).json({ message: 'Failed to fetch groups' });
+  }
+});
+
+app.get('/api/group-messages/:groupId', async (req, res) => {
+  const { groupId } = req.params;
+
+  try {
+    const messages = await db.GroupMessage.findAll({
+      where: { group_id: groupId },
+      include: [
+        {
+          model: db.User,
+          as: 'sender',
+          attributes: ['id', 'username']
+        }
+      ],
+      order: [['created_at', 'ASC']]
+    });
+
+    res.json(messages);
+  } catch (error) {
+    console.error('Error fetching group messages:', error);
+    res.status(500).json({ message: 'Failed to fetch group messages' });
+  }
+});
+
+// --- Group Message: POST & Emit with sender info ---
+app.post('/api/group-messages', async (req, res) => {
+  const { group_id, sender_id, message } = req.body;
+
+  try {
+    if (containsOffensiveWords(message)) {
+      return res.status(400).json({ error: 'Message contains offensive words' });
+    }
+
+    const newMessage = await db.GroupMessage.create({
+      group_id,
+      sender_id,
+      message
+    });
+
+    // Ambil data user pengirim (username)
+    const senderUser = await db.User.findByPk(sender_id, {
+      attributes: ['id', 'username']
+    });
+
+    // Format pesan lengkap (seperti GET)
+    const msgWithSender = {
+      id: newMessage.id,
+      group_id: newMessage.group_id,
+      sender_id: newMessage.sender_id,
+      message: newMessage.message,
+      is_pinned: newMessage.is_pinned,
+      created_at: newMessage.created_at,
+      sender: senderUser ? { id: senderUser.id, username: senderUser.username } : null
+    };
+
+    // Emit ke semua member group
+    io.to(`group_${group_id}`).emit('newGroupMessage', msgWithSender);
+
+    // Notifikasi ke user 
+    const groupMembers = await db.GroupMember.findAll({
+      where: { group_id },
+      attributes: ['user_id']
+    });
+    const memberIds = groupMembers.map(m => m.user_id);
+    memberIds.forEach(userId => {
+      io.to(`user_${userId}`).emit('newGroupMessageNotification', {
+        group_id,
+        message: newMessage.message,
+        sender_id: newMessage.sender_id
+      });
+    });
+
+    res.status(201).json(msgWithSender);
+  } catch (error) {
+    console.error('Error sending group message:', error);
+    res.status(500).json({ message: 'Failed to send group message' });
+  }
+});
+
+// --- Pin Message Group ---
+app.post('/api/pin-message', async (req, res) => {
+  const { message_id, group_id } = req.body;
+
+  try {
+    const msg = await db.GroupMessage.findByPk(message_id, {
+      include: [
+        {
+          model: db.User,
+          as: 'sender',
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+    if (!msg) return res.status(404).json({ error: 'Message not found' });
+
+    // Unpin semua pesan di group ini
+    await db.GroupMessage.update({ is_pinned: false }, { where: { group_id } });
+
+    // Toggle pin/unpin pesan ini
+    msg.is_pinned = !msg.is_pinned;
+    await msg.save();
+
+    // Emit ke group: update status pinned di FE
+    io.to(`group_${group_id}`).emit('messagePinned', {
+      id: msg.id,
+      group_id: msg.group_id,
+      sender_id: msg.sender_id,
+      message: msg.message,
+      is_pinned: msg.is_pinned,
+      created_at: msg.created_at,
+      sender: msg.sender ? { id: msg.sender.id, username: msg.sender.username } : null
+    });
+
+    res.json({ success: true, message: msg.is_pinned ? 'Message pinned' : 'Message unpinned', data: msg });
+  } catch (error) {
+    console.error('Error pinning/unpinning message:', error);
+    res.status(500).json({ message: 'Failed to pin/unpin message' });
+  }
+});
+
+// Socket.IO connection handler
+io.on('connection', (socket) => {
+  socket.on('joinGroup', (groupId) => {
+    socket.join(`group_${groupId}`);
+    console.log(`User joined group room: group_${groupId}`);
+  });
+
+  socket.on('leaveGroup', (groupId) => {
+    socket.leave(`group_${groupId}`);
+    console.log(`User left group room: group_${groupId}`);
+  });
+});
+
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log('Backend ready to receive requests.');

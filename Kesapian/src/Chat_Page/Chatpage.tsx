@@ -13,7 +13,7 @@ interface Chat {
   id: number;
   sender: string;
   message: string;
-  timestamp: string; // Akan dipecah menjadi date dan time
+  timestamp: string; 
   avatar?: string;
   unreadCount?: number; 
 }
@@ -123,7 +123,7 @@ const Chatpage = (): React.ReactElement => {
 
   const handleAddFriendClick = () => navigate('/add-friend');
   const handleChatClick = () => navigate('/chat');
-  const handleGroupsClick = () => alert('Groups feature is coming soon!');
+  const handleGroupsClick = () => navigate('/groups'); 
   const handleProfileClick = () => navigate('/profile');
   const handleMoreClick = () => handleLogout();
 
@@ -140,7 +140,6 @@ const Chatpage = (): React.ReactElement => {
         </div>
       </header>
 
-      {/* ScrollArea kini akan mengikuti alur dokumen */}
       <ScrollArea className="chat-scroll-area">
         {/* Incoming Friend Requests Section */}
         {incomingRequests.length > 0 && (

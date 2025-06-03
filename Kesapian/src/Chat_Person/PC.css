@@ -120,6 +120,7 @@ body {
 
 .message-content {
   font-size: 0.95em;
+  color: black;
 }
 
 .message-time {
@@ -193,7 +194,7 @@ body {
 }
 
 .add-button svg, .send-button svg {
-  color: #007bff; 
+  color: black; 
 }
 
 .message-input {

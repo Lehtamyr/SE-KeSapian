@@ -29,7 +29,7 @@ const ChatPersonPage: React.FC = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]); 
   const chatAreaRef = useRef<HTMLDivElement>(null); 
 
-  // Effect untuk menginisialisasi user, mengambil history, dan MENDENGARKAN SOCKET.IO
+  // Effect untuk menginisialisasi user, mengambil history, dan mendengarkan SOCKET.IO
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -40,7 +40,7 @@ const ChatPersonPage: React.FC = () => {
       if (partnerIdNum > 0) {
         fetchChatHistory(currentUserId, partnerIdNum);
         fetchChatPartnerDetails(partnerIdNum);
-        fetchSuggestions(currentUserId); // Panggil fungsi ini
+        fetchSuggestions(currentUserId);
 
         socket.emit('joinChat', currentUserId);
         console.log(`Frontend: Emitting joinChat for user ID: ${currentUserId}`);
@@ -71,12 +71,12 @@ const ChatPersonPage: React.FC = () => {
     };
 
     socket.on('newMessage', handleNewMessage);
-    socket.on('offensiveWordDetected', handleOffensiveWordDetected); // DAFTARKAN LISTENER INI
+    socket.on('offensiveWordDetected', handleOffensiveWordDetected); 
 
     return () => {
       console.log('Frontend: Cleaning up Socket.IO listeners');
       socket.off('newMessage', handleNewMessage);
-      socket.off('offensiveWordDetected', handleOffensiveWordDetected); // HAPUS LISTENER SAAT KOMPONEN UNMOUNT
+      socket.off('offensiveWordDetected', handleOffensiveWordDetected);
     };
 
   }, [chatPartnerId, navigate]); 
@@ -108,7 +108,7 @@ const ChatPersonPage: React.FC = () => {
     try {
       const response = await fetch(`http://localhost:3000/users/${partnerId}`);
       if (!response.ok) {
-        const errorText = await response.text(); // Baca respons error
+        const errorText = await response.text(); // membaca respons error
         console.error('Failed to fetch partner details response:', errorText);
         throw new Error('Failed to fetch partner details');
       }
@@ -150,7 +150,7 @@ const ChatPersonPage: React.FC = () => {
           messageText: message.trim(),
         };
 
-        // Mengirim pesan melalui HTTP POST API (ini akan memicu Socket.IO di backend)
+        // Mengirim pesan melalui HTTP POST API 
         const response = await fetch('http://localhost:3000/messages', {
           method: 'POST',
           headers: {
@@ -179,7 +179,7 @@ const ChatPersonPage: React.FC = () => {
       <header className="chat-header">
         <div className="header-left">
           <button className="back-button" onClick={() => navigate('/chat')}>
-            {/* SVG atau ikon panah kembali */}
+            {/* SVG atau ikon back button */}
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-arrow-left">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
@@ -239,7 +239,7 @@ const ChatPersonPage: React.FC = () => {
             <button
               key={index}
               className="suggestion-button"
-              onClick={() => handleSuggestionClick(sug)} // <-- PANGGIL FUNGSI INI
+              onClick={() => handleSuggestionClick(sug)} 
             >
               {sug}
             </button>

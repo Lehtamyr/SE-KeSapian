@@ -12,7 +12,7 @@ db.UserLocation = require('./location')(sequelize, Sequelize);
 db.Friendship = require('./friendship')(sequelize, Sequelize);
 db.Chat = require('./Chat')(sequelize, Sequelize)
 db.SuggestionText = require('./SuggestionText')(sequelize, Sequelize); 
-db.OffensiveWord = require('./OffensiveWord')(sequelize); // <--- TAMBAHKAN BARIS INI
+db.OffensiveWord = require('./OffensiveWord')(sequelize); 
 
 // Define Associations
 db.User.hasOne(db.UserLocation, {
@@ -50,5 +50,20 @@ db.User.hasMany(db.Friendship, {
     foreignKey: 'addresseeId',
 });
 
+db.Group = require('./Group')(sequelize, Sequelize);
+db.GroupMember = require('./GroupMember')(sequelize, Sequelize);
+db.GroupMessage = require('./GroupMessage')(sequelize, Sequelize);
+
+db.Group.hasMany(db.GroupMember, { as: 'members', foreignKey: 'group_id' });
+db.GroupMember.belongsTo(db.Group, { as: 'group', foreignKey: 'group_id' });
+
+db.Group.hasMany(db.GroupMessage, { as: 'messages', foreignKey: 'group_id' });
+db.GroupMessage.belongsTo(db.Group, { as: 'group', foreignKey: 'group_id' });
+
+db.GroupMember.belongsTo(db.User, { as: 'user', foreignKey: 'user_id' });
+db.User.hasMany(db.GroupMember, { as: 'groupMemberships', foreignKey: 'user_id' });
+
+db.GroupMessage.belongsTo(db.User, { as: 'sender', foreignKey: 'sender_id' });
+db.User.hasMany(db.GroupMessage, { as: 'sentGroupMessages', foreignKey: 'sender_id' });
 
 module.exports = db;

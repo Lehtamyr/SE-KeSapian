@@ -9,6 +9,10 @@ import Chatpage from './Chat_Page/Chatpage';
 import { AddFriendPage } from './Add_Friend/AddFriendPage';
 import ProfilePage from './Profile_Page/Profilepage'; // Import ProfilePage
 import ChatPersonPage from "./Chat_Person/ChatPersonPage"
+import GroupPage from './Group_Page/groupPage';
+import AddGroupPage from './AddGroup_Page/AddgoupPage';
+import GroupChatPage from './GroupChat_Page/GroupChatPage';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,7 +26,10 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/add-friend" element={<AddFriendPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/chat/person/:chatPartnerId" element={<ChatPersonPage />} /> 
-
+        <Route path="/groups" element={<GroupPage />} />
+        <Route path="/create-group" element={<AddGroupPage />} />
+        <Route path='/group-chat/:chat' element={<GroupChatPage />} />
+        
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>

@@ -2,7 +2,6 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%; 
-  /* overflow: hidden;  */
   font-family: 'Poppins', sans-serif;
   background-color: #f5f5f5;
   display: flex; 
@@ -11,7 +10,6 @@ html, body {
   box-sizing: border-box; 
 }
 
-/* Container utama aplikasi chat */
 .chat-container {
   width: 100%;
   width: 430px; 
@@ -56,11 +54,9 @@ html, body {
   align-items: center;
 }
 
-
-/* Scroll Area */
 .chat-scroll-area {
-  flex-grow: 1; /* Mengisi sisa ruang vertikal yang tersedia */
-  overflow-y: auto; /* scroll vertikal */
+  flex-grow: 1; 
+  overflow-y: auto; 
   border-radius: 5px;
   padding-left: 18px; 
   padding-right: 18px; 
@@ -70,7 +66,6 @@ html, body {
   min-height: 0;
 }
 
-/* Style untuk judul section */
 .incoming-requests-section h2,
 .chat-list-section h2 {
   margin-bottom: 15px;
@@ -79,9 +74,8 @@ html, body {
   color: #1f2937;
 }
 
-/* Incoming Friend Requests Section */
 .incoming-requests-section {
-  padding-bottom: 20px; /* Jarak dari bawah incoming requests ke elemen selanjutnya */
+  padding-bottom: 20px; 
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -148,7 +142,7 @@ html, body {
   max-width: 180px;
 }
 
-.incoming-request-card-right { /* Kontainer untuk tombol Accept/Reject */
+.incoming-request-card-right { 
   display: flex;
   flex-direction: column; 
   align-items: flex-end; 
@@ -186,8 +180,6 @@ html, body {
   background-color: #dc2626; 
 }
 
-
-/* Your Chats Section */
 .chat-list-section {
   padding-top: 20px;
 }
@@ -203,7 +195,6 @@ html, body {
   min-height: 200px;
 }
 
-/* Chat Card Styling */
 .chat-card {
   display: flex;
   justify-content: space-between;
@@ -269,14 +260,14 @@ html, body {
   margin: 0;
 }
 
-.chat-card-right { /* Kontainer waktu dan badge unread di chat-card */
+.chat-card-right { 
   display: flex;
   flex-direction: column; 
   align-items: flex-end; 
   flex-shrink: 0;
 }
 
-.chat-card-right .chat-datetime { /* Kelas baru untuk Tanggal dan Waktu dalam satu baris */
+.chat-card-right .chat-datetime { 
   color: #9ca3af;
   font-size: 12px;
   margin: 0; 
@@ -293,7 +284,6 @@ html, body {
   margin-top: 4px; 
 }
 
-/* Bottom Navigation */
 .chat-bottom-nav {
   position: fixed;
   bottom: 0;
