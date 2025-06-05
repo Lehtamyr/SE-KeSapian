@@ -1,0 +1,104 @@
+.group-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.create-group-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.group-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.group-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.group-card:hover {
+  background-color: #f5f5f5;
+}
+
+.group-avatar {
+  margin-right: 1rem;
+}
+
+.group-info {
+  flex: 1;
+}
+
+.group-info h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.group-members {
+  margin: 0.25rem 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.last-message {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.empty-groups {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.group-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  color: #444;
+}
+
+.create-group-btn {
+  margin-top: 16px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: back 0.2s;
+}
+
+.create-group-btn:hover {
+  background-color: #16a34a;
+}
+
+.addgroupheader{
+  background: none;
+  border: none;
+}

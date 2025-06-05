@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ProfilePage.css";
+import "./ProfilePage.css"; 
 
 const ProfilePage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [isPrivate, setIsPrivate] = useState<boolean>(false); 
   const [preferences, setPreferences] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,10 +31,9 @@ const ProfilePage: React.FC = () => {
         const data = await response.json();
         const user = data.user;
 
-        setUsername(user.username || "Anonymous"); 
-        setLocation(user.location || "Not set"); 
-        setPreferences(Array.isArray(user.preferences) ? user.preferences : []); 
-
+        setUsername(user.username || "Anonymous");
+        setIsPrivate(user.is_private === 1 || user.is_private === true); // Set is_private (assuming 1 for true, 0 for false or boolean)
+        setPreferences(Array.isArray(user.preferences) ? user.preferences : []);
       } catch (err: any) {
         console.error("Error fetching profile:", err);
         setError("Failed to load profile: " + err.message);
@@ -47,8 +46,8 @@ const ProfilePage: React.FC = () => {
   }, [userId, navigate]);
 
   const handleUpdateProfile = async (
-    field: "username" | "location",
-    value: string
+    field: "username" | "is_private", 
+    value: string | boolean 
   ) => {
     if (!userId) {
       alert("User is not logged in.");
@@ -75,8 +74,8 @@ const ProfilePage: React.FC = () => {
       if (field === "username") {
         setUsername(data.user.username);
         localStorage.setItem("username", data.user.username);
-      } else if (field === "location") {
-        setLocation(data.user.location);
+      } else if (field === "is_private") {
+        setIsPrivate(data.user.is_private === 1 || data.user.is_private === true);
       }
     } catch (err: any) {
       console.error(`Error updating ${field}:`, err);
@@ -88,8 +87,11 @@ const ProfilePage: React.FC = () => {
     setUsername(e.target.value);
   };
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(e.target.value);
+  // New handler for the private toggle
+  const handleIsPrivateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.checked;
+    setIsPrivate(newValue);
+    handleUpdateProfile("is_private", newValue); // Immediately save on toggle
   };
 
   const handleEditPreferences = () => {
@@ -97,23 +99,22 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // Go back to the previous page (e.g., Chatpage)
+    navigate(-1);
   };
 
   // Navigation handlers for the bottom bar
   const handleChatClick = () => {
-    navigate('/chat');
+    navigate("/chat");
   };
   const handleGroupsClick = () => {
-    alert('Groups page not implemented yet!');
+    alert("Groups page not implemented yet!");
   };
   const handleProfileClick = () => {
-    navigate('/profile');
+    navigate("/profile");
   };
   const handleMoreClick = () => {
-    alert('More options not implemented yet!');
+    alert("More options not implemented yet!");
   };
-
 
   if (loading) {
     return <div className="profile-loading">Loading profile...</div>;
@@ -123,7 +124,7 @@ const ProfilePage: React.FC = () => {
     return <div className="profile-error">Error: {error}</div>;
   }
 
-  const profileInitial = username ? username.charAt(0).toUpperCase() : 'A';
+  const profileInitial = username ? username.charAt(0).toUpperCase() : "A";
 
   return (
     <div className="profile-container">
@@ -139,7 +140,8 @@ const ProfilePage: React.FC = () => {
             <span className="profile-initial">{profileInitial}</span>
           </div>
           <h2>{username}</h2>
-          <p>{location}</p>
+          <p>{isPrivate ? "Private Account" : "Public Account"}</p>{" "}
+          {/* Display private status */}
         </header>
 
         {/* Content */}
@@ -159,17 +161,21 @@ const ProfilePage: React.FC = () => {
           </section>
 
           <section className="section">
-            <label htmlFor="location-input">
-              <span className="icon">📍</span> Location
+            <label htmlFor="private-toggle">
+              <span className="icon">🔒</span> Private Account
             </label>
-            <input
-              id="location-input"
-              type="text"
-              value={location}
-              onChange={handleLocationChange}
-              onBlur={() => handleUpdateProfile("location", location)} // Save on blur
-              className="profile-input"
-            />
+            <div className="toggle-switch">
+              <input
+                type="checkbox"
+                id="private-toggle"
+                checked={isPrivate}
+                onChange={handleIsPrivateChange}
+              />
+              <label htmlFor="private-toggle" className="slider"></label>
+            </div>
+            <p className="toggle-status">
+                {isPrivate ? "Your account is private. Only your friend who can see your content." : "Your account is public. Anyone can see your content."}
+            </p>
           </section>
 
           <section className="section">

@@ -1,17 +1,18 @@
 const { DataTypes } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
     const Friendship = sequelize.define('Friendship', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
+            allowNull: false,
         },
         requesterId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Users', 
+                model: 'Users',
                 key: 'id',
             },
         },
@@ -23,27 +24,21 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id',
             },
         },
-        status: { 
-            type: DataTypes.STRING,
+        status: {
+            type: DataTypes.ENUM('pending', 'accepted', 'rejected', 'blocked'),
             allowNull: false,
             defaultValue: 'pending',
         },
     }, {
-        tableName: 'Friendships', 
-        timestamps: true, 
-        indexes: [ 
-            {
+        tableName: 'Friendships',
+        timestamps: true,
+        underscored: true,
+        indexes: [
+            { // Memastikan kombinasi requesterId dan addresseeId unik
                 unique: true,
-                fields: ['requesterId', 'addresseeId']
+                fields: ['requester_id', 'addressee_id'],
             }
         ]
     });
-
-    Friendship.associate = (models) => {
-        // Friendship belong to two Users
-        Friendship.belongsTo(models.User, { as: 'Requester', foreignKey: 'requesterId' });
-        Friendship.belongsTo(models.User, { as: 'Addressee', foreignKey: 'addresseeId' });
-    };
-
     return Friendship;
 };

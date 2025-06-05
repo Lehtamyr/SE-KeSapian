@@ -13,7 +13,7 @@ interface Chat {
   id: number;
   sender: string;
   message: string;
-  timestamp: string; // Akan dipecah menjadi date dan time
+  timestamp: string; 
   avatar?: string;
   unreadCount?: number; 
 }
@@ -123,7 +123,7 @@ const Chatpage = (): React.ReactElement => {
 
   const handleAddFriendClick = () => navigate('/add-friend');
   const handleChatClick = () => navigate('/chat');
-  const handleGroupsClick = () => alert('Groups feature is coming soon!');
+  const handleGroupsClick = () => navigate('/groups'); 
   const handleProfileClick = () => navigate('/profile');
   const handleMoreClick = () => handleLogout();
 
@@ -140,7 +140,6 @@ const Chatpage = (): React.ReactElement => {
         </div>
       </header>
 
-      {/* ScrollArea kini akan mengikuti alur dokumen */}
       <ScrollArea className="chat-scroll-area">
         {/* Incoming Friend Requests Section */}
         {incomingRequests.length > 0 && (
@@ -176,49 +175,53 @@ const Chatpage = (): React.ReactElement => {
           </div>
         )}
 
-        {/* Your Chats Section */}
-        {chats.length === 0 ? (
-          <div className="chat-empty">
-            <p className="text-lg">No chats yet</p>
-            <p className="text-sm">Add contacts to start chatting</p>
-          </div>
-        ) : (
-          <div className="chat-list-section">
-            <h2>Your Chats</h2>
-            {chats.map((chat) => {
-              return (
-                <div key={chat.id} className="chat-card">
-                  <div className="chat-card-left">
-                    <Avatar className="chat-avatar">
-                      {chat.avatar ? (
-                        <AvatarImage src={chat.avatar} alt={chat.sender} />
-                      ) : (
-                        <AvatarFallback>
-                          {chat.sender ? chat.sender.charAt(0).toUpperCase() : '?'}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                    <div className="chat-card-content">
-                      <p className="chat-username">{chat.sender}</p>
-                      <p className="chat-message">{chat.message}</p>
-                    </div>
+      {/* Your Chats Section */}
+      {chats.length === 0 ? (
+        <div className="chat-empty">
+          <p className="text-lg">No chats yet</p>
+          <p className="text-sm">Add contacts to start chatting</p>
+        </div>
+      ) : (
+        <div className="chat-list-section">
+          <h2>Your Chats</h2>
+          {chats.map((chat) => {
+            return (
+              <div
+                key={chat.id}
+                className="chat-card"
+                onClick={() => navigate(`/chat/person/${chat.id}`)} // Perhatikan rute di sini
+              >
+                <div className="chat-card-left">
+                  <Avatar className="chat-avatar">
+                    {chat.avatar ? (
+                      <AvatarImage src={chat.avatar} alt={chat.sender} />
+                    ) : (
+                      <AvatarFallback>
+                        {chat.sender ? chat.sender.charAt(0).toUpperCase() : '?'}
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                  <div className="chat-card-content">
+                    <p className="chat-username">{chat.sender}</p>
+                    <p className="chat-message">{chat.message}</p>
                   </div>
-                  <div className="chat-card-right">
-                    <p className="chat-datetime">{chat.timestamp}</p>
-                    {/* Div khusus untuk unread count */}
-                    <div className="chat-unread-container">
-                        {chat.unreadCount && chat.unreadCount > 0 ? (
-                        <span className="chat-unread-badge">{chat.unreadCount}</span>
-                        ) : (
-                        <span className="chat-unread-empty"></span>
-                        )}
-                    </div>
                 </div>
+                <div className="chat-card-right">
+                  <p className="chat-datetime">{chat.timestamp}</p>
+                  {/* Div khusus untuk unread count */}
+                  <div className="chat-unread-container">
+                    {chat.unreadCount && chat.unreadCount > 0 ? (
+                      <span className="chat-unread-badge">{chat.unreadCount}</span>
+                    ) : (
+                      <span className="chat-unread-empty"></span>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
+              </div>
+            );
+          })}
+        </div>
+      )}
       </ScrollArea>
 
       <nav className="chat-bottom-nav">

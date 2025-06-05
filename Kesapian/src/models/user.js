@@ -23,49 +23,40 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             },
         },
-        password: { 
+        password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true,
             },
         },
-        location: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
         preferences: {
-            type: DataTypes.TEXT, // Simpan array string sebagai JSON string
+            type: DataTypes.TEXT, 
             allowNull: true,
             get() {
                 const rawValue = this.getDataValue('preferences');
-                return rawValue ? JSON.parse(rawValue) : null;
+                try {
+                    return rawValue ? JSON.parse(rawValue) : [];
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                    return [];
+                }
             },
             set(value) {
-                this.setDataValue('preferences', JSON.stringify(value));
+                this.setDataValue('preferences', 
+                    value && value.length ? JSON.stringify(value) : null
+                );
             }
         },
         is_private: {
-            type: DataTypes.BOOLEAN, 
+            type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true,
         },
     }, {
-        tableName: 'Users', // Nama tabel di database
-        timestamps: true, // createdAt, updatedAt
+        tableName: 'Users', 
+        timestamps: true, 
     });
-
-    User.associate = (models) => {
-        // Asosiasi dengan Friendship
-        User.hasMany(models.Friendship, {
-            as: 'SentRequests', // Permintaan pertemanan yang dikirim oleh user ini
-            foreignKey: 'requesterId'
-        });
-        User.hasMany(models.Friendship, {
-            as: 'ReceivedRequests', // Permintaan pertemanan yang diterima oleh user ini
-            foreignKey: 'addresseeId'
-        });
-    };
 
     return User;
 };

@@ -18,7 +18,7 @@ const PreferencesPage: React.FC = () => {
         // Fetch existing preferences when the component mounts
         const fetchPreferences = async () => {
             if (!userId) {
-                // User not logged in, handle accordingly (e.g., redirect to login)
+                // User not logged in, handle accordingly 
                 return;
             }
             try {
@@ -90,7 +90,7 @@ const PreferencesPage: React.FC = () => {
     };
 
     const handleBack = () => {
-        navigate(-1); // Go back to the previous page (likely ProfilePage if coming from there)
+        navigate(-1); // Go back to the previous page 
     };
 
     return (

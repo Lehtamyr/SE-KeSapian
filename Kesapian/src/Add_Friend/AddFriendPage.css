@@ -143,11 +143,11 @@
 }
 
 .add-button {
-    background-color: #22c55e;
+    background-color: #22c55e !important;
     color: white;
-    border: none;
+    border: none !important;
     border-radius: 20px;
-    padding: 6px 12px;
+    padding: 6px 12px !important;
     font-size: 12px;
     font-weight: 500;
 }
@@ -164,6 +164,32 @@
     text-align: center;
     color: #6b7280;
     padding: 20px;
+}
+
+.preference-section {
+    margin-top: 30px;
+}
+
+.preference-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.preference-tag {
+    padding: 6px 12px;
+    border-radius: 16px;
+    background-color: #e5e7eb;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preference-tag.selected {
+    background-color: #22c55e;
+    color: white;
 }
 
 .bottom-nav {
